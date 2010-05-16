@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="JobeetCSharpModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="JobeetCSharpModelStoreContainer">
+          <EntitySet Name="Affiliate" EntityType="JobeetCSharpModel.Store.Affiliate" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Category" EntityType="JobeetCSharpModel.Store.Category" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CategoryAffiliate" EntityType="JobeetCSharpModel.Store.CategoryAffiliate" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Job" EntityType="JobeetCSharpModel.Store.Job" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_CategoryAffiliate_Affiliate" Association="JobeetCSharpModel.Store.FK_CategoryAffiliate_Affiliate">
+            <End Role="Affiliate" EntitySet="Affiliate" />
+            <End Role="CategoryAffiliate" EntitySet="CategoryAffiliate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategoryAffiliate_Category" Association="JobeetCSharpModel.Store.FK_CategoryAffiliate_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="CategoryAffiliate" EntitySet="CategoryAffiliate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Job_Category" Association="JobeetCSharpModel.Store.FK_Job_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Job" EntitySet="Job" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Affiliate">
+          <Key>
+            <PropertyRef Name="AffiliateId" />
+          </Key>
+          <Property Name="AffiliateId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Url" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Token" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Slug" Type="nvarchar" Nullable="false" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="CategoryAffiliate">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="AffiliateId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="AffiliateId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="JobId" />
+          </Key>
+          <Property Name="JobId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CateroryId" Type="int" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="255" />
+          <Property Name="Company" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Logo" Type="nvarchar" MaxLength="255" />
+          <Property Name="Url" Type="nvarchar" MaxLength="255" />
+          <Property Name="Position" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Location" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Description" Type="ntext" Nullable="false" />
+          <Property Name="HowToApply" Type="ntext" Nullable="false" />
+          <Property Name="Token" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="IsPublic" Type="bit" Nullable="false" />
+          <Property Name="IsActivated" Type="bit" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="ExpiresAt" Type="date" Nullable="false" />
+          <Property Name="CreateAt" Type="date" Nullable="false" />
+          <Property Name="UpdateAt" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CategoryAffiliate_Affiliate">
+          <End Role="Affiliate" Type="JobeetCSharpModel.Store.Affiliate" Multiplicity="1" />
+          <End Role="CategoryAffiliate" Type="JobeetCSharpModel.Store.CategoryAffiliate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Affiliate">
+              <PropertyRef Name="AffiliateId" />
+            </Principal>
+            <Dependent Role="CategoryAffiliate">
+              <PropertyRef Name="AffiliateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategoryAffiliate_Category">
+          <End Role="Category" Type="JobeetCSharpModel.Store.Category" Multiplicity="1" />
+          <End Role="CategoryAffiliate" Type="JobeetCSharpModel.Store.CategoryAffiliate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="CategoryAffiliate">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Job_Category">
+          <End Role="Category" Type="JobeetCSharpModel.Store.Category" Multiplicity="1" />
+          <End Role="Job" Type="JobeetCSharpModel.Store.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="CateroryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ResetDefaultCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="JobeetCSharpModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="JobeetCSharpEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Affiliate" EntityType="JobeetCSharpModel.Affiliate" />
+          <EntitySet Name="Category" EntityType="JobeetCSharpModel.Category" />
+          <EntitySet Name="Job" EntityType="JobeetCSharpModel.Job" />
+          <AssociationSet Name="FK_Job_Category" Association="JobeetCSharpModel.FK_Job_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Job" EntitySet="Job" />
+          </AssociationSet>
+          <AssociationSet Name="CategoryAffiliate" Association="JobeetCSharpModel.CategoryAffiliate">
+            <End Role="Affiliate" EntitySet="Affiliate" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <FunctionImport Name="ResetDefaultCategories" />
+        </EntityContainer>
+        <EntityType Name="Affiliate">
+          <Key>
+            <PropertyRef Name="AffiliateId" />
+          </Key>
+          <Property Name="AffiliateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Url" Type="String" MaxLength="255" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="255" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="Token" Type="String" MaxLength="255" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="JobeetCSharpModel.CategoryAffiliate" FromRole="Affiliate" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Job" Relationship="JobeetCSharpModel.FK_Job_Category" FromRole="Category" ToRole="Job" />
+          <NavigationProperty Name="Affiliate" Relationship="JobeetCSharpModel.CategoryAffiliate" FromRole="Category" ToRole="Affiliate" />
+          <Property Type="String" Name="Slug" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="JobId" />
+          </Key>
+          <Property Name="JobId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CateroryId" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="255" Unicode="true" FixedLength="false" Nullable="true" />
+          <Property Name="Company" Type="String" MaxLength="255" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="Logo" Type="String" MaxLength="255" Unicode="true" FixedLength="false" Nullable="true" />
+          <Property Name="Url" Type="String" MaxLength="255" Unicode="true" FixedLength="false" Nullable="true" />
+          <Property Name="Position" Type="String" MaxLength="255" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="255" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="HowToApply" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="Token" Type="String" MaxLength="255" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="IsPublic" Type="Boolean" DefaultValue="true" Nullable="false" />
+          <Property Name="IsActivated" Type="Boolean" DefaultValue="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="255" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="ExpiresAt" Type="DateTime" Nullable="false" />
+          <Property Name="CreateAt" Type="DateTime" Nullable="false" />
+          <Property Name="UpdateAt" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="JobeetCSharpModel.FK_Job_Category" FromRole="Job" ToRole="Category" />
+        </EntityType>
+        <Association Name="FK_Job_Category">
+          <End Role="Category" Type="JobeetCSharpModel.Category" Multiplicity="1" />
+          <End Role="Job" Type="JobeetCSharpModel.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="CateroryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CategoryAffiliate">
+          <End Role="Affiliate" Type="JobeetCSharpModel.Affiliate" Multiplicity="*" />
+          <End Role="Category" Type="JobeetCSharpModel.Category" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="JobeetCSharpModelStoreContainer" CdmEntityContainer="JobeetCSharpEntities">
+          <EntitySetMapping Name="Affiliate"><EntityTypeMapping TypeName="JobeetCSharpModel.Affiliate"><MappingFragment StoreEntitySet="Affiliate">
+            <ScalarProperty Name="AffiliateId" ColumnName="AffiliateId" />
+            <ScalarProperty Name="Url" ColumnName="Url" />
+            <ScalarProperty Name="Email" ColumnName="Email" />
+            <ScalarProperty Name="Token" ColumnName="Token" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Category"><EntityTypeMapping TypeName="JobeetCSharpModel.Category"><MappingFragment StoreEntitySet="Category">
+            <ScalarProperty Name="Slug" ColumnName="Slug" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Job"><EntityTypeMapping TypeName="JobeetCSharpModel.Job"><MappingFragment StoreEntitySet="Job">
+            <ScalarProperty Name="JobId" ColumnName="JobId" />
+            <ScalarProperty Name="CateroryId" ColumnName="CateroryId" />
+            <ScalarProperty Name="Type" ColumnName="Type" />
+            <ScalarProperty Name="Company" ColumnName="Company" />
+            <ScalarProperty Name="Logo" ColumnName="Logo" />
+            <ScalarProperty Name="Url" ColumnName="Url" />
+            <ScalarProperty Name="Position" ColumnName="Position" />
+            <ScalarProperty Name="Location" ColumnName="Location" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+            <ScalarProperty Name="HowToApply" ColumnName="HowToApply" />
+            <ScalarProperty Name="Token" ColumnName="Token" />
+            <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+            <ScalarProperty Name="IsActivated" ColumnName="IsActivated" />
+            <ScalarProperty Name="Email" ColumnName="Email" />
+            <ScalarProperty Name="ExpiresAt" ColumnName="ExpiresAt" />
+            <ScalarProperty Name="CreateAt" ColumnName="CreateAt" />
+            <ScalarProperty Name="UpdateAt" ColumnName="UpdateAt" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <AssociationSetMapping Name="CategoryAffiliate" TypeName="JobeetCSharpModel.CategoryAffiliate" StoreEntitySet="CategoryAffiliate">
+            <EndProperty Name="Affiliate">
+              <ScalarProperty Name="AffiliateId" ColumnName="AffiliateId" />
+            </EndProperty>
+            <EndProperty Name="Category">
+              <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="ResetDefaultCategories" FunctionName="JobeetCSharpModel.Store.ResetDefaultCategories" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="JobeetModel" ZoomLevel="107">
+        <EntityTypeShape EntityType="JobeetCSharpModel.Affiliate" Width="1.5" PointX="0.75" PointY="2.25" Height="2.1725878906250005" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobeetCSharpModel.Category" Width="1.5" PointX="3" PointY="2.375" Height="1.7879850260416661" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobeetCSharpModel.Job" Width="1.5" PointX="5.25" PointY="1" Height="4.480205078125" IsExpanded="true" />
+        <AssociationConnector Association="JobeetCSharpModel.FK_Job_Category" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="3.2689925130208328" />
+          <ConnectorPoint PointX="5.25" PointY="3.2689925130208328" />
+        </AssociationConnector>
+        <AssociationConnector Association="JobeetCSharpModel.CategoryAffiliate" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="3.2689925130208328" />
+          <ConnectorPoint PointX="3" PointY="3.2689925130208328" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

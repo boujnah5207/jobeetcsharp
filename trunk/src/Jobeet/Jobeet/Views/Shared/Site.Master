@@ -1,0 +1,76 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+    <link href="<%= Url.Content("~/Content/Main.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%= Url.Content("~/Content/Jobs.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%= Url.Content("~/Content/Job.css") %>" rel="stylesheet" type="text/css" />
+    <script src="<%= Url.Content("~/Scripts/MicrosoftAjax.debug.js") %>"
+        type="text/javascript"></script>
+    <script src="<%= Url.Content("~/Scripts/MicrosoftMvcAjax.debug.js") %>"
+        type="text/javascript"></script>
+</head>
+
+<body>
+
+<div id="container">
+      <div id="header">
+        <div class="content">
+        <h1><a href="/">
+            <img src="<%= Url.Content("~/Content/Images/logo.jpg") %>" alt="Jobeet Job Board" />
+          </a></h1>
+          <div id="sub_header">
+            <div class="post">
+              <h2>Ask for people</h2>
+              <div>
+                <%= Html.ActionLink("Post a Job", "new", "job") %>
+              </div>
+            </div>
+ 
+            <div class="search">
+              <h2>Ask for a job</h2>
+
+              <% using (Ajax.BeginForm("AjaxSearch","Job",new AjaxOptions(){UpdateTargetId="content", LoadingElementId="showWait"}))
+                 { %>
+                    <input type="text" name="keywords" id="search_keywords" />
+                    <input type="submit" value="search" />
+                <%} %>
+                <div class="help">
+                  Enter some keywords (city, country, position, ...)
+                </div>
+                 <div id="showWait" class="help" style="display: none">
+                        Recherche en cours...
+                 </div>
+             </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div id="searchResult">
+      </div>-->
+      <div id="content">
+        <div class="content">
+          <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        </div>
+      </div>
+ 
+      <div id="footer">
+        <div class="content">
+          <span class="symfony">
+            <img src="<%= Url.Content("~/Content/Images/jobeet-mini.png") %>" alt="jobeet-mini" />
+            powered by <a href="http://www.asp.net/mvc/">
+            <img src="<%= Url.Content("~/Content/Images/aspnet.png") %>" alt="symfony framework" />
+            </a>
+          </span>
+          <ul>
+            <li><a href="">About Jobeet</a></li>
+            <li class="feed"><a href="">Full feed</a></li>
+            <li><a href="">Jobeet API</a></li>
+            <li class="last"><a href="">Affiliates</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
