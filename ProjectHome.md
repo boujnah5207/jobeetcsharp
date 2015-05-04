@@ -1,0 +1,3 @@
+"Jobeet est un logiciel open-source de recherche d'emploi qui ne fait qu'une seule chose, mais le fait bien".(1) A l'origine développé par le groupe du projet Symfony (framework PHP reconnu), nous avons choisi de reprendre cette application et de la porter sur des technologies Microsoft. En particulier, nous utiliserons le Framework .NET 4 avec notamment Entity Framework 4 et MVC 2.
+
+Livre blanc associé au projet : http://docs.google.com/View?id=ddptchfw_67cxt32kwv
